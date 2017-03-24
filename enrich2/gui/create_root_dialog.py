@@ -1,4 +1,4 @@
-#  Copyright 2016 Alan F Rubin
+#  Copyright 2016-2017 Alan F Rubin
 #
 #  This file is part of Enrich2.
 #
@@ -15,31 +15,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
-from __future__ import absolute_import
-import six.moves.tkinter as tk
-import six.moves.tkinter_ttk
-import six.moves.tkinter_tksimpledialog
-import six.moves.tkinter_messagebox
-import six.moves.tkinter_filedialog
-import json
-from copy import deepcopy
-from collections import OrderedDict
+import tkinter as tk
+import tkinter.ttk as ttk
+import tkinter.simpledialog as tkSimpleDialog
+
 from .dialog_elements import FileEntry, StringEntry, DEFAULT_COLUMNS
-from ..experiment import Experiment
-from ..condition import Condition
-from ..selection import Selection
-from ..basic import BasicSeqLib
-from ..barcodevariant import BcvSeqLib
-from ..barcodeid import BcidSeqLib
-from ..barcode import BarcodeSeqLib
-from ..overlap import OverlapSeqLib
-from ..seqlib import SeqLib
-from ..variant import VariantSeqLib
 from .create_seqlib_dialog import seqlib_label_text
 
 
-class CreateRootDialog(six.moves.tkinter_tksimpledialog.Dialog):
+class CreateRootDialog(tkSimpleDialog.Dialog):
     """
     Dialog box for creating a new root element.
     """
@@ -49,34 +33,34 @@ class CreateRootDialog(six.moves.tkinter_tksimpledialog.Dialog):
         self.output_directory_tk = FileEntry("Output Directory", self.cfg_dict, 'output directory', optional=False, directory=True)
         self.name_tk = StringEntry("Name", self.cfg_dict, 'name', optional=False)
         self.element = None
-        six.moves.tkinter_tksimpledialog.Dialog.__init__(self, parent_window, title)
+        tkSimpleDialog.Dialog.__init__(self, parent_window, title)
 
 
     def body(self, master):
         row_no = self.name_tk.body(master, 0)
         row_no += self.output_directory_tk.body(master, row_no)
 
-        element_types = six.moves.tkinter_ttk.Frame(master, padding=(3, 3, 12, 12))
+        element_types = ttk.Frame(master, padding=(3, 3, 12, 12))
         element_types.grid(column=0, row=row_no, sticky="nsew", columnspan=DEFAULT_COLUMNS)
 
-        message = six.moves.tkinter_ttk.Label(element_types, text="Root object type:")
+        message = ttk.Label(element_types, text="Root object type:")
         message.grid(column=0, row=0)
 
-        label = six.moves.tkinter_ttk.Label(element_types, text="Experiment")
+        label = ttk.Label(element_types, text="Experiment")
         label.grid(column=0, row=1, sticky="w")
-        rb = six.moves.tkinter_ttk.Radiobutton(element_types, text="Experiment", variable=self.element_tkstring, value="Experiment")
+        rb = ttk.Radiobutton(element_types, text="Experiment", variable=self.element_tkstring, value="Experiment")
         rb.grid(column=0, row=2, sticky="w")
         rb.invoke()
 
-        label = six.moves.tkinter_ttk.Label(element_types, text="Selection")
+        label = ttk.Label(element_types, text="Selection")
         label.grid(column=0, row=3, sticky="w")
-        rb = six.moves.tkinter_ttk.Radiobutton(element_types, text="Selection", variable=self.element_tkstring, value="Selection")
+        rb = ttk.Radiobutton(element_types, text="Selection", variable=self.element_tkstring, value="Selection")
         rb.grid(column=0, row=4, sticky="w")
 
-        label = six.moves.tkinter_ttk.Label(element_types, text="SeqLib")
+        label = ttk.Label(element_types, text="SeqLib")
         label.grid(column=0, row=5, sticky="w")
         for i, k in enumerate(seqlib_label_text.keys()):
-            rb = six.moves.tkinter_ttk.Radiobutton(element_types, text=seqlib_label_text[k], variable=self.element_tkstring, value=k)
+            rb = ttk.Radiobutton(element_types, text=seqlib_label_text[k], variable=self.element_tkstring, value=k)
             rb.grid(column=0, row=(i + 6), sticky="w")
 
 

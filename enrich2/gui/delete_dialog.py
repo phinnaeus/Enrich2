@@ -1,4 +1,4 @@
-#  Copyright 2016 Alan F Rubin
+#  Copyright 2016-2017 Alan F Rubin
 #
 #  This file is part of Enrich2.
 #
@@ -15,10 +15,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import absolute_import
-import six.moves.tkinter as tk
-import six.moves.tkinter_ttk
-import six.moves.tkinter_tksimpledialog
+import tkinter as tk
+import tkinter.ttk as ttk
+import tkinter.simpledialog as tkSimpleDialog
 
 
 def subtree_ids(treeview, x, level=0):
@@ -34,7 +33,7 @@ def subtree_ids(treeview, x, level=0):
     return id_list
 
 
-class DeleteDialog(six.moves.tkinter_tksimpledialog.Dialog):
+class DeleteDialog(tkSimpleDialog.Dialog):
     """
     Confirmation dialog box for deleting the selected items from the Treeview.
     """
@@ -44,7 +43,7 @@ class DeleteDialog(six.moves.tkinter_tksimpledialog.Dialog):
         for x in self.tree.treeview.selection():
             if x not in [y[0] for y in self.id_tuples]:
                 self.id_tuples.extend(subtree_ids(self.tree.treeview, x))
-        six.moves.tkinter_tksimpledialog.Dialog.__init__(self, parent_window, title)
+        tkSimpleDialog.Dialog.__init__(self, parent_window, title)
 
 
     def body(self, master):
@@ -65,7 +64,7 @@ class DeleteDialog(six.moves.tkinter_tksimpledialog.Dialog):
                 else:
                     bullet = "    " * (level + 1) + u"\u25C7"
                 message_string += u"{bullet} {name}\n".format(bullet=bullet, name=self.tree.get_element(x).name)
-        message = six.moves.tkinter_ttk.Label(master, text=message_string, justify="left")
+        message = ttk.Label(master, text=message_string, justify="left")
         message.grid(row=0, sticky="w")
 
 
@@ -83,7 +82,7 @@ class DeleteDialog(six.moves.tkinter_tksimpledialog.Dialog):
 
             box.pack()
         else:
-            six.moves.tkinter_tksimpledialog.Dialog.buttonbox(self)
+            tkSimpleDialog.Dialog.buttonbox(self)
 
 
     def apply(self):

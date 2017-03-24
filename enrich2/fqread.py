@@ -15,16 +15,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
-from __future__ import absolute_import
+
 from sys import stderr
 import os.path
 import re
+import string
 import itertools
 import bz2
 import gzip
 from array import array
-from six.moves import range
 
 # The following regex is referenced by line number in the class documentation.
 # Matches FASTQ headers based on the following pattern (modify as needed):
@@ -304,7 +303,7 @@ def read_fastq_multi(fnames, filter_function=None, buffer_size=BUFFER_SIZE,
         fq_generators.append(read_fastq(f, filter_function=None,
                              buffer_size=BUFFER_SIZE, qbase=qbase))
 
-    for records in itertools.izip_longest(*fq_generators, fillvalue=None):
+    for records in itertools.zip_longest(*fq_generators, fillvalue=None):
         if None in records: # mismatched file lengths
             if match_lengths:
                 yield None

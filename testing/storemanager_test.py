@@ -1,4 +1,4 @@
-#  Copyright 2016-2017 Alan F Rubin
+#  Copyright 2016 Alan F Rubin
 #
 #  This file is part of Enrich2.
 #
@@ -14,4 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
+
+import unittest
+from enrich2.storemanager import StoreManager
 

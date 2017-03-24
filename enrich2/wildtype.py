@@ -15,12 +15,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
-from __future__ import absolute_import
+
 import logging
 import re
+
+from enrich2.base.utils import pretty_class_str
 from .constants import CODON_TABLE
-from six.moves import range
 
 
 class WildTypeSequence(object):
@@ -39,6 +39,9 @@ class WildTypeSequence(object):
         self.dna_offset = None
         self.protein_offset = None
 
+
+    def __str__(self):
+        return pretty_class_str(self)
 
     def __eq__(self, other):
         # note we don't need to check protein_offset, since it depends on dna_offset and protein_seq
