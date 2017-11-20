@@ -46,7 +46,7 @@ General parameters
 
 	Required for Counts File Mode. Path to an HDF5 file or tab-separated value file that contains counts for this time point. Raw counts from that file will be used for this SeqLib. If an HDF5 file is provided, all tables in the "raw/" group are copied. Sequence file parameters will be ignored. The file must have the suffix ".h5" for HDF5 or one of ".txt" ".tsv" or ".csv" for tab-separated value files.
 
-	.. note:: Tab-separated value files must have exactly two columns separated by a tab. The first line of the file must have the column heading "counts" preceded by a single tab character. The first column contains the barcode, identifier, or HGVS variant string depending on the type of raw counts required by the SeqLib type. The second column contains the count for that element.
+	.. note:: Tab-separated value files must have exactly two columns separated by a tab. The first line of the file must have the column heading "count" preceded by a single tab character. The first column contains the barcode, identifier, or HGVS variant string depending on the type of raw counts required by the SeqLib type. The second column contains the count for that element.
 
 .. _sequence-file-seqlib-parameters:
 
