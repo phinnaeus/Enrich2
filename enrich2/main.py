@@ -18,7 +18,7 @@
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from __future__ import print_function
+
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import logging
 import json
@@ -106,10 +106,10 @@ def main_cmd():
     desc_string = "Command-line driver for Enrich2 v{}".format(__version__) + \
         "\n\nscoring methods:\n" + \
         "\n".join(["  {:22}{}".format(k, v) for k, v in
-                   SCORING_METHODS.items()]) + \
+                   list(SCORING_METHODS.items())]) + \
         "\n\nlog ratio methods:\n" + \
         "\n".join(["  {:22}{}".format(k, v) for k, v in
-                   LOGR_METHODS.items()])
+                   list(LOGR_METHODS.items())])
 
     # create parser and add description
     parser = ArgumentParser(prog="Enrich2", description=desc_string,
@@ -118,9 +118,9 @@ def main_cmd():
     # add command line arguments
     parser.add_argument("config", help="JSON configuration file")
     parser.add_argument("scoring_method", help="scoring method",
-                        choices=SCORING_METHODS.keys())
+                        choices=list(SCORING_METHODS.keys()))
     parser.add_argument("logr_method", help="log ratio method",
-                        choices=LOGR_METHODS.keys())
+                        choices=list(LOGR_METHODS.keys()))
 
     # add support for semantic version checking
     parser.add_argument("--version", action="version",

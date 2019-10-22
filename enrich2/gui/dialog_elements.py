@@ -15,11 +15,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
-import Tkinter as tk
-import ttk
-import tkMessageBox
-import tkFileDialog
+
+import tkinter as tk
+import tkinter.ttk
+import tkinter.messagebox
+import tkinter.filedialog
 import re
 import os.path
 
@@ -31,7 +31,7 @@ class SectionLabel(object):
         self.text = text
 
     def body(self, master, row, columns=DEFAULT_COLUMNS, **kwargs):
-        label = ttk.Label(master, text=self.text)
+        label = tkinter.ttk.Label(master, text=self.text)
         label.grid(row=row, column=0, columnspan=columns, sticky="w")
         return 1
 
@@ -71,7 +71,7 @@ class Checkbox(object):
 
         Returns the number of rows taken by this element.
         """
-        self.checkbox = ttk.Checkbutton(master, text=self.text,
+        self.checkbox = tkinter.ttk.Checkbutton(master, text=self.text,
                                         variable=self.value)
         self.checkbox.grid(row=row, column=0, columnspan=columns, sticky="w")
         return 1
@@ -123,9 +123,9 @@ class MyEntry(object):
 
         Returns the number of rows taken by this element.
         """
-        label = ttk.Label(master, text=self.text)
+        label = tkinter.ttk.Label(master, text=self.text)
         label.grid(row=row, column=0, columnspan=1, sticky="e")
-        self.entry = ttk.Entry(master, textvariable=self.value)
+        self.entry = tkinter.ttk.Entry(master, textvariable=self.value)
         self.entry.grid(row=row, column=1, columnspan=columns - 1, sticky="ew")
         return 1
 
@@ -137,7 +137,7 @@ class MyEntry(object):
         if not self.enabled:
             return True
         elif not self.optional and len(self.value.get()) == 0:
-            tkMessageBox.showwarning("", "{} not specified.".format(self.text))
+            tkinter.messagebox.showwarning("", "{} not specified.".format(self.text))
             return False
         else:
             return True
@@ -184,23 +184,23 @@ class FileEntry(MyEntry):
 
         Returns the number of rows taken by this element.
         """
-        label = ttk.Label(master, text=self.text)
+        label = tkinter.ttk.Label(master, text=self.text)
         label.grid(row=row, column=0, columnspan=1, sticky="e")
-        self.entry = ttk.Entry(master, textvariable=self.value)
+        self.entry = tkinter.ttk.Entry(master, textvariable=self.value)
         self.entry.grid(row=row, column=1, columnspan=columns - 1, sticky="ew")
         if self.directory:
-            self.choose = ttk.Button(master, text="Choose...",
+            self.choose = tkinter.ttk.Button(master, text="Choose...",
                                      command=lambda:
                                      self.value.set(
-                                        tkFileDialog.askdirectory()))
+                                        tkinter.filedialog.askdirectory()))
         else:
-            self.choose = ttk.Button(master, text="Choose...",
+            self.choose = tkinter.ttk.Button(master, text="Choose...",
                                      command=lambda:
                                      self.value.set(
-                                         tkFileDialog.askopenfilename()))
+                                         tkinter.filedialog.askopenfilename()))
         self.choose.grid(row=row + 1, column=1, sticky="w")
         if self.optional:
-            self.clear = ttk.Button(master, text="Clear",
+            self.clear = tkinter.ttk.Button(master, text="Clear",
                                     command=lambda: self.value.set(""))
             self.clear.grid(row=row + 1, column=2, sticky="e")
         return 2
@@ -210,7 +210,7 @@ class FileEntry(MyEntry):
             return True
         elif len(self.value.get()) == 0:
             if not self.optional:
-                tkMessageBox.showwarning("",
+                tkinter.messagebox.showwarning("",
                                          "{} not specified.".format(self.text))
                 return False
             else:
@@ -222,13 +222,13 @@ class FileEntry(MyEntry):
                            self.extensions):
                         return True
                     else:
-                        tkMessageBox.showwarning("", "Invalid file extension "
+                        tkinter.messagebox.showwarning("", "Invalid file extension "
                                                  "for {}.".format(self.text))
                         return False
                 else:  # no extension restriction
                     return True
             else:
-                tkMessageBox.showwarning("", "{} file does not exist."
+                tkinter.messagebox.showwarning("", "{} file does not exist."
                                          "".format(self.text))
                 return False
 
@@ -262,9 +262,9 @@ class StringEntry(MyEntry):
 
         Returns the number of rows taken by this element.
         """
-        label = ttk.Label(master, text=self.text)
+        label = tkinter.ttk.Label(master, text=self.text)
         label.grid(row=row, column=0, columnspan=1, sticky="e")
-        self.entry = ttk.Entry(master, textvariable=self.value)
+        self.entry = tkinter.ttk.Entry(master, textvariable=self.value)
         self.entry.grid(row=row, column=1, columnspan=columns - 1, sticky="ew")
         return 1
 
@@ -305,10 +305,10 @@ class IntegerEntry(MyEntry):
             label_sticky = "e"
             label_width = 1
 
-        label = ttk.Label(master, text=self.text)
+        label = tkinter.ttk.Label(master, text=self.text)
         label.grid(row=row, column=label_column, columnspan=label_width,
                    sticky=label_sticky)
-        self.entry = ttk.Entry(master, textvariable=self.value, width=width)
+        self.entry = tkinter.ttk.Entry(master, textvariable=self.value, width=width)
         self.entry.grid(row=row, column=entry_column, columnspan=entry_width,
                         sticky=entry_sticky)
         return 1
@@ -328,18 +328,18 @@ class IntegerEntry(MyEntry):
             except ValueError:
                 if len(self.value.get()) == 0:
                     if not self.optional:
-                        tkMessageBox.showwarning("", "{} not specified."
+                        tkinter.messagebox.showwarning("", "{} not specified."
                                                  "".format(self.text))
                         return False
                     else:
                         return True
                 else:
-                    tkMessageBox.showwarning("", "{} is not an integer."
+                    tkinter.messagebox.showwarning("", "{} is not an integer."
                                              "".format(self.text))
                     return False
             else:
                 if intvalue < self.minvalue:
-                    tkMessageBox.showwarning("", "{} lower than minimum value "
+                    tkinter.messagebox.showwarning("", "{} lower than minimum value "
                                              "({}).".format(self.text,
                                                             self.minvalue))
                     return False

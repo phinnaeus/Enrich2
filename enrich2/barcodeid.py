@@ -110,11 +110,11 @@ class BcidSeqLib(BarcodeSeqLib):
                 barcode_identifiers[bc] = identifier
 
             # save counts, filtering based on the min count
-            self.save_counts('identifiers', {k:v for k,v in df_dict.iteritems() if v >= self.identifier_min_count}, raw=False)
+            self.save_counts('identifiers', {k:v for k,v in df_dict.items() if v >= self.identifier_min_count}, raw=False)
             del df_dict
 
             # write the active subset of the BarcodeMap to the store
-            barcodes = barcode_identifiers.keys()
+            barcodes = list(barcode_identifiers.keys())
             barcode_identifiers = pd.DataFrame({'value' : [barcode_identifiers[bc] for bc in barcodes]}, index=barcodes)
             del barcodes
             barcode_identifiers.sort_values('value', inplace=True)

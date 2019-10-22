@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
+
 import pandas as pd
 import numpy as np
 import logging
@@ -191,7 +191,7 @@ class OverlapSeqLib(VariantSeqLib):
 
         mismatches = 0
         first = True
-        for i in xrange(self.overlap_length):
+        for i in range(self.overlap_length):
             a = self.fwd_start - 1 + i
             b = len(rev) - self.rev_start - self.overlap_length + i + 1
             try:
@@ -228,7 +228,7 @@ class OverlapSeqLib(VariantSeqLib):
     def counts_from_reads(self):
         df_dict = dict()
 
-        self.merge_mismatches = pd.DataFrame(data=0, index=[x + self.fwd_start + self.wt.dna_offset for x in xrange(0, self.overlap_length)], columns=["resolved", "unresolved", "first"])
+        self.merge_mismatches = pd.DataFrame(data=0, index=[x + self.fwd_start + self.wt.dna_offset for x in range(0, self.overlap_length)], columns=["resolved", "unresolved", "first"])
 
         logging.info("Counting variants", extra={'oname': self.name})
         max_mut_variants = 0

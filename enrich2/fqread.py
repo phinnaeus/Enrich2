@@ -15,11 +15,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
+
 from sys import stderr
 import os.path
 import re
-import string
 import itertools
 import bz2
 import gzip
@@ -41,7 +40,7 @@ header_pattern = re.compile("@(?P<MachineName>.+)"
 BUFFER_SIZE = 100000 # empirically optimized for reading FASTQ files
 
 
-dna_trans = string.maketrans("actgACTG", "tgacTGAC")
+dna_trans = str.maketrans("actgACTG", "tgacTGAC")
 
 
 class FQRead(object):
@@ -241,11 +240,11 @@ def read_fastq(fname, filter_function=None, buffer_size=BUFFER_SIZE, qbase=33):
     """
     _, _, _, compression = split_fastq_path(fname)
     if compression is None: # raw FASTQ
-        handle = open(fname, "rU")
+        handle = open(fname, "r")
     elif compression == "bz2":
-        handle = bz2.BZ2File(fname, "rU")
+        handle = bz2.BZ2File(fname, "r")
     elif compression == "gz":
-        handle = gzip.GzipFile(fname, "rU")
+        handle = gzip.GzipFile(fname, "r")
     else:
         raise IOError("unrecognized compression mode '{mode}'".format(mode=compression))
 
@@ -270,7 +269,7 @@ def read_fastq(fname, filter_function=None, buffer_size=BUFFER_SIZE, qbase=33):
             leftover = '\n'.join(lines[len(lines) - dangling:])
 
         # index into the list of lines to pull out the FASTQ records
-        for i in xrange(fastq_count):
+        for i in range(fastq_count):
             # (header, sequence, header2, quality)
             fq = FQRead(*lines[i * 4:(i + 1) * 4], qbase=qbase)
             if filter_function is None: # no filtering
@@ -303,7 +302,7 @@ def read_fastq_multi(fnames, filter_function=None, buffer_size=BUFFER_SIZE,
         fq_generators.append(read_fastq(f, filter_function=None,
                              buffer_size=BUFFER_SIZE, qbase=qbase))
 
-    for records in itertools.izip_longest(*fq_generators, fillvalue=None):
+    for records in itertools.zip_longest(*fq_generators, fillvalue=None):
         if None in records: # mismatched file lengths
             if match_lengths:
                 yield None

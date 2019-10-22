@@ -43,8 +43,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Enrich2'
-copyright = u'2016-2019, Alan F Rubin'
+project = 'Enrich2'
+copyright = '2016-2019, Alan F Rubin'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -191,8 +191,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Enrich2.tex', u'Enrich2 Documentation',
-   u'Alan F Rubin', 'manual'),
+  ('index', 'Enrich2.tex', 'Enrich2 Documentation',
+   'Alan F Rubin', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -221,8 +221,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'enrich2', u'Enrich2 Documentation',
-     [u'Alan F Rubin'], 1)
+    ('index', 'enrich2', 'Enrich2 Documentation',
+     ['Alan F Rubin'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -235,8 +235,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Enrich2', u'Enrich2 Documentation',
-   u'Alan F Rubin', 'Enrich2', 'One line description of project.',
+  ('index', 'Enrich2', 'Enrich2 Documentation',
+   'Alan F Rubin', 'Enrich2', 'One line description of project.',
    'Miscellaneous'),
 ]
 

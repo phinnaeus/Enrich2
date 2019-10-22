@@ -15,12 +15,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
-import Tkinter as tk
-import ttk
-import tkSimpleDialog
-import tkMessageBox
-import tkFileDialog
+
+import tkinter as tk
+import tkinter.ttk
+import tkinter.simpledialog
+import tkinter.messagebox
+import tkinter.filedialog
 import json
 from copy import deepcopy
 from collections import OrderedDict
@@ -43,21 +43,21 @@ seqlib_label_text = OrderedDict([("BcvSeqLib", "Barcoded Variant"),
                                  ])
 
 
-class CreateSeqLibDialog(tkSimpleDialog.Dialog):
+class CreateSeqLibDialog(tkinter.simpledialog.Dialog):
     """
     Dialog box for creating a new SeqLib.
     """
     def __init__(self, parent_window, title="New SeqLib"):
         self.element_tkstring = tk.StringVar()
         self.element_type = None
-        tkSimpleDialog.Dialog.__init__(self, parent_window, title)
+        tkinter.simpledialog.Dialog.__init__(self, parent_window, title)
 
     def body(self, master):
-        message = ttk.Label(master, text="SeqLib type:")
+        message = tkinter.ttk.Label(master, text="SeqLib type:")
         message.grid(column=0, row=0)
 
         for i, k in enumerate(seqlib_label_text.keys()):
-            rb = ttk.Radiobutton(master, text=seqlib_label_text[k],
+            rb = tkinter.ttk.Radiobutton(master, text=seqlib_label_text[k],
                                  variable=self.element_tkstring, value=k)
             rb.grid(column=0, row=(i + 1), sticky="w")
             if i == 0:

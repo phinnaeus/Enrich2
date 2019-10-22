@@ -20,9 +20,9 @@ import gzip
 import bz2
 import os.path
 
-re_barcode = re.compile("^[ACGT]+$")
-re_variant_dna = re.compile("^[ACGTN]+$")
-re_identifier = re.compile("^.+$")
+re_barcode = re.compile(b"^[ACGT]+$")
+re_variant_dna = re.compile(b"^[ACGTN]+$")
+re_identifier = re.compile(b"^.+$")
 
 
 class BarcodeMap(dict):
@@ -54,11 +54,11 @@ class BarcodeMap(dict):
         try:
             ext = os.path.splitext(mapfile)[-1].lower()
             if ext in (".bz2"):
-                handle = bz2.BZ2File(mapfile, "rU")
+                handle = bz2.BZ2File(mapfile, "r")
             elif ext in (".gz"):
-                handle = gzip.GzipFile(mapfile, "rU")
+                handle = gzip.GzipFile(mapfile, "r")
             else:
-                handle = open(mapfile, "rU")
+                handle = open(mapfile, "r")
         except IOError:
             raise IOError(
                 "Could not open barcode map file '{}' [{}]".format(mapfile,

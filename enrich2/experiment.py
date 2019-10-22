@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
+
 import logging
 import pandas as pd
 import numpy as np
@@ -191,7 +191,7 @@ class Experiment(StoreManager):
 
         bcm = None
         for sel in self.selection_list():
-            if '/main/barcodemap' in sel.store.keys():
+            if '/main/barcodemap' in list(sel.store.keys()):
                 if bcm is None:
                     bcm = sel.store['/main/barcodemap']
                 else:
@@ -229,9 +229,9 @@ class Experiment(StoreManager):
                 selections_index.extend([sel.name] * len(sel.timepoints))
                 values_index.extend(["c_{}".format(x) for x in
                                      sorted(sel.timepoints)])
-        columns = pd.MultiIndex.from_tuples(zip(conditions_index,
+        columns = pd.MultiIndex.from_tuples(list(zip(conditions_index,
                                                 selections_index,
-                                                values_index),
+                                                values_index)),
                                             names=["condition", "selection",
                                                    "timepoint"])
 
@@ -290,9 +290,9 @@ class Experiment(StoreManager):
                 conditions_index.extend([cnd.name] * len(values_list))
                 selections_index.extend([sel.name] * len(values_list))
                 values_index.extend(sorted(values_list))
-        columns = pd.MultiIndex.from_tuples(zip(conditions_index,
+        columns = pd.MultiIndex.from_tuples(list(zip(conditions_index,
                                                 selections_index,
-                                                values_index),
+                                                values_index)),
                                             names=["condition", "selection",
                                                    "value"])
 
@@ -466,8 +466,8 @@ class Experiment(StoreManager):
                 cnd1_index.extend([cnd1] * len(values_list))
                 cnd2_index.extend([cnd2] * len(values_list))
                 values_index.extend(sorted(values_list))
-        columns = pd.MultiIndex.from_tuples(zip(cnd1_index, cnd2_index,
-                                                values_index),
+        columns = pd.MultiIndex.from_tuples(list(zip(cnd1_index, cnd2_index,
+                                                values_index)),
                                             names=["condition1", "condition2",
                                                    "value"])
 
@@ -522,7 +522,7 @@ class Experiment(StoreManager):
         if self.tsv_requested:
             logging.info("Generating tab-separated output files",
                          extra={'oname': self.name})
-            for k in self.store.keys():
+            for k in list(self.store.keys()):
                 self.write_table_tsv(k)
         for s in self.selection_list():
             s.write_tsv()

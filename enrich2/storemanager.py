@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
+
 import os
 import logging
 import pandas as pd
@@ -129,7 +129,7 @@ class StoreManager(object):
         for x in self.children:
             shared.extend(x.labels)
         shared = collections.Counter(shared)
-        shared = [x for x in shared.keys() if shared[x] == len(self.children)]
+        shared = [x for x in list(shared.keys()) if shared[x] == len(self.children)]
         return sorted(shared, key=lambda a: ELEMENT_LABELS.index(a))
 
     @property
@@ -282,7 +282,7 @@ class StoreManager(object):
         """
         Make sure the *value* is valid and set it.
         """
-        if value in SCORING_METHODS.keys():
+        if value in list(SCORING_METHODS.keys()):
             self._scoring_method = value
         else:
             raise ValueError("Invalid setting for scoring_method "
@@ -409,7 +409,7 @@ class StoreManager(object):
         """
         Make sure the *value* is valid and set it.
         """
-        if value in LOGR_METHODS.keys():
+        if value in list(LOGR_METHODS.keys()):
             self._logr_method = value
         else:
             raise ValueError("Invalid setting '{}' for log-ratio method "
@@ -667,7 +667,7 @@ class StoreManager(object):
         Returns:
             bool: True if the key exists in the HDF5 store, else False.
         """
-        if key in self.store.keys():
+        if key in list(self.store.keys()):
             logging.info("Found existing '{}'".format(key),
                          extra={'oname': self.name})
             return True
@@ -682,7 +682,7 @@ class StoreManager(object):
 
         This method really needs a better name.
         """
-        if destination in self.store.keys():
+        if destination in list(self.store.keys()):
             # remove the current destination table because we are using append
             # append takes the "min_itemsize" argument, and put doesn't
             logging.info("Overwriting existing '{}'".format(destination),

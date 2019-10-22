@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Enrich2.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
+
 import logging
 import re
 from .constants import CODON_TABLE
@@ -74,7 +74,7 @@ class WildTypeSequence(object):
 
                 # perform translation
                 self.protein_seq = ""
-                for i in xrange(0, len(self.dna_seq), 3):
+                for i in range(0, len(self.dna_seq), 3):
                     self.protein_seq += CODON_TABLE[self.dna_seq[i:i + 3]]
 
                 # set the reference offset if it's a multiple of three
@@ -137,5 +137,5 @@ class WildTypeSequence(object):
             seq = self.dna_seq
             offset = self.dna_offset
 
-        return [(i + offset + 1, seq[i]) for i in xrange(len(seq))]
+        return [(i + offset + 1, seq[i]) for i in range(len(seq))]
 
